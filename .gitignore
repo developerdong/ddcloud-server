@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/linux,eclipse,java
+# Created by https://www.gitignore.io/api/linux,intellij,java
 
 ### Linux ###
 *~
@@ -17,58 +17,59 @@
 .nfs*
 
 
-### Eclipse ###
+### Intellij ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
 
-# Eclipse Core
-.project
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
 
-# External tool builders
-.externalToolBuilders/
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
 
-# Locally stored "Eclipse launch configurations"
-*.launch
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
 
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
+## File-based project format:
+*.iws
 
-# CDT-specific (C/C++ Development Tooling)
-.cproject
+## Plugin-specific files:
 
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
+# IntelliJ
+/out/
 
-# Java annotation processor (APT)
-.factorypath
+# mpeltonen/sbt-idea plugin
+.idea_modules/
 
-# PDT-specific (PHP Development Tools)
-.buildpath
+# JIRA plugin
+atlassian-ide-plugin.xml
 
-# sbteclipse plugin
-.target
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
 
-# Tern plugin
-.tern-project
+### Intellij Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# TeXlipse plugin
-.texlipse
-
-# STS (Spring Tool Suite)
-.springBeans
-
-# Code Recommenders
-.recommenders/
+# *.iml
+# modules.xml
+# .idea/misc.xml 
+# *.ipr
 
 
 ### Java ###
