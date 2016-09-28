@@ -17,15 +17,15 @@ public class ServerConfig extends JFinalConfig{
 		me.add("/file", FileController.class);
 	}
 	public void configPlugin(Plugins me){
-		final String MYSQL_CONNECTION = "jdbc:mysql://10.10.32.51/y5qn8XcP1RkAgfLt";
-		final String MYSQL_USERNAME = "uhPJsz8HdijLKCTe";
-		final String MYSQL_PASSWORD = "pNqSBYetbPncxAywj";
-		
+		final String MYSQL_CONNECTION = "jdbc:mysql://127.0.0.1:3306/yun";
+		final String MYSQL_USERNAME = "root";
+		final String MYSQL_PASSWORD = "1234567890";
+
 		C3p0Plugin cp = new C3p0Plugin(MYSQL_CONNECTION, MYSQL_USERNAME, MYSQL_PASSWORD);
 		ActiveRecordPlugin arp =new ActiveRecordPlugin(cp);
 		me.add(cp);
 		me.add(arp);
-		
+
 		arp.addMapping("user", User.class);
 		
 	}
