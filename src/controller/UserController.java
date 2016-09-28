@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfinal.core.Controller;
+import handler.StorageHandler;
 import model.User;
 
 public class UserController extends Controller {
@@ -12,7 +13,10 @@ public class UserController extends Controller {
 	}
 	public void signup(){
 		try {
-			new User().set("username", getPara("username")).set("password", getPara("password")).save();
+			User user = new User();
+			user.set("username", getPara("username")).set("password", getPara("password")).save();
+			new StorageHandler(user.getInt("id")).createUserRoot();
+
 			render("注册成功", 200);
 		}
 		catch(Exception e){
