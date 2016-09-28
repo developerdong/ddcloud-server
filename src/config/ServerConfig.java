@@ -1,7 +1,8 @@
 package config;
 
 import com.jfinal.config.*;
-import api.*;
+
+import controller.*;
 
 public class ServerConfig extends JFinalConfig{
 	public void configConstant(Constants me){

@@ -1,4 +1,4 @@
-package api;
+package controller;
 
 import com.jfinal.core.Controller;
 
