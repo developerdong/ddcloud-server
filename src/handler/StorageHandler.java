@@ -4,16 +4,17 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 
 import java.io.*;
+import java.net.URI;
 import java.util.LinkedList;
 
 public class StorageHandler {
     private final Configuration conf;
     private final FileSystem hdfs;
     private final String userRoot;
-    public StorageHandler(int userId) throws IOException{
+    public StorageHandler(String serverURI, int userId) throws IOException{
         this.conf = new Configuration();
-        this.hdfs = FileSystem.get(conf);
-        this.userRoot = '/' + String.valueOf(userId);
+        this.hdfs = FileSystem.get(URI.create(serverURI), conf);
+        this.userRoot = "/" + String.valueOf(userId);
     }
     private String getRealPath(String path){
         return userRoot + path;
@@ -49,4 +50,5 @@ public class StorageHandler {
     public boolean delete(String path) throws IOException{
         return hdfs.delete(new Path(getRealPath(path)), true);
     }
+
 }
