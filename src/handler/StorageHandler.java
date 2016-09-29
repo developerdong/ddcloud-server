@@ -22,14 +22,14 @@ public class StorageHandler {
     public boolean createUserRoot() throws IOException{
         return hdfs.mkdirs(new Path(userRoot));
     }
-    public String[] list(String dirPath) throws IOException{
+    public ItemMetadata[] list(String dirPath) throws IOException{
         FileStatus status[] = hdfs.listStatus(new Path(getRealPath(dirPath)));
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<ItemMetadata> itemList = new LinkedList<ItemMetadata>();
         for(int i=0; i<status.length; i++){
             String path = status[i].getPath().toString();
-            list.add(path.substring(path.lastIndexOf('/')+1));
+            itemList.add(new ItemMetadata(path.substring(path.lastIndexOf('/') + 1), status[i].getLen(), status[i].isDir(), status[i].getModificationTime(), status[i].getAccessTime()));
         }
-        return list.toArray(new String[0]);
+        return itemList.toArray(new ItemMetadata[0]);
     }
     public void createFile(String filePath, byte[] fileContent) throws IOException{
         FSDataOutputStream fileOutputStream = hdfs.create(new Path(getRealPath(filePath)));
@@ -51,4 +51,39 @@ public class StorageHandler {
         return hdfs.delete(new Path(getRealPath(path)), true);
     }
 
+    public class ItemMetadata {
+        private String name;
+        private long length;
+        private boolean isDir;
+        private long modificationTime;
+        private long accessTime;
+
+        public ItemMetadata(String name, long length, boolean isDir, long modificationTime, long accessTime) {
+            this.name = name;
+            this.length = length;
+            this.isDir = isDir;
+            this.modificationTime = modificationTime;
+            this.accessTime = accessTime;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public long getLength() {
+            return length;
+        }
+
+        public boolean isDir() {
+            return isDir;
+        }
+
+        public long getModificationTime() {
+            return modificationTime;
+        }
+
+        public long getAccessTime() {
+            return accessTime;
+        }
+    }
 }
