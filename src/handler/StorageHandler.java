@@ -19,6 +19,19 @@ public class StorageHandler {
     private String getRealPath(String path){
         return userRoot + path;
     }
+    private String getParentDirPath(String path){
+        return path.substring(0, path.lastIndexOf('/'));
+    }
+    private String getFileName(String filePath){
+        return filePath.substring(filePath.lastIndexOf('/')+1);
+    }
+    private String getFileExtension(String filePath){
+        return filePath.substring(filePath.lastIndexOf('.'));
+    }
+    private String getFileNameWithoutExtension(String filePath){
+        return filePath.substring(filePath.lastIndexOf('/')+1, filePath.lastIndexOf('.'));
+    }
+
     public boolean createUserRoot() throws IOException{
         return hdfs.mkdirs(new Path(userRoot));
     }
