@@ -31,10 +31,8 @@ public class StorageHandler {
         }
         return list.toArray(new String[0]);
     }
-    public void createFile(String filePath, byte[] fileContent) throws IOException{
-        FSDataOutputStream fileOutputStream = hdfs.create(new Path(getRealPath(filePath)));
-        fileOutputStream.write(fileContent);
-        fileOutputStream.close();
+    public void createFile(String destDirPath, File file) throws IOException {
+        hdfs.copyFromLocalFile(false, true, new Path(file.getAbsolutePath()), new Path(getRealPath(destDirPath)));
     }
     public boolean createDir(String dirPath) throws IOException{
         return hdfs.mkdirs(new Path(getRealPath(dirPath)));
