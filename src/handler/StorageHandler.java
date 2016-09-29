@@ -51,8 +51,8 @@ public class StorageHandler {
         return hdfs.mkdirs(new Path(getRealPath(dirPath)));
     }
     public File getFile(String filePath) throws IOException{
-        File tempFile = File.createTempFile(filePath.substring(0, filePath.lastIndexOf('.')), filePath.substring(filePath.lastIndexOf('.')));
-        hdfs.copyToLocalFile(new Path(filePath), new Path(tempFile.getAbsolutePath()));
+        File tempFile = new File("/tmp", getFileNameWithoutExtension(filePath) + getFileExtension(filePath));
+        hdfs.copyToLocalFile(new Path(getRealPath(filePath)), new Path(tempFile.getAbsolutePath()));
         return tempFile;
     }
     public boolean rename(String oldPath, String newPath) throws IOException{
