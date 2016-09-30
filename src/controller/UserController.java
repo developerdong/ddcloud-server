@@ -13,7 +13,7 @@ public class UserController extends Controller {
 	private static HashMap<String, Integer> tokenMap = new HashMap<>();
 	public void login() throws Exception{
 		User user = User.dao.findFirst("select * from user where username='" + getPara("username") + "'");
-		if(user.getStr("password").equals(getPara("password"))){
+		if(user.getStr("password").equals(new HashGeneratorUtils().hashString(getPara("password"), "MD5"))){
             String token = new HashGeneratorUtils().hashString(getPara("username") + new Date().getTime(), "MD5");
 			tokenMap.put(token, user.getInt("id"));
 
@@ -33,7 +33,7 @@ public class UserController extends Controller {
 	public void signup(){
 		try {
 			User user = new User();
-			user.set("username", getPara("username")).set("password", getPara("password")).save();
+			user.set("username", getPara("username")).set("password", new HashGeneratorUtils().hashString(getPara("password"), "MD5")).save();
 			new StorageHandler("hdfs://localhost:9000", user.getInt("id")).createUserRoot();
             renderText("注册成功");
 		}
