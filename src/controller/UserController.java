@@ -12,20 +12,29 @@ import java.util.WeakHashMap;
 public class UserController extends Controller {
 	private static WeakHashMap<String, Integer> tokenMap = new WeakHashMap<>();
 	public void login() throws Exception{
-		User user = User.dao.findFirst("select * from user where username='" + getPara("username") + "'");
-		if(user.getStr("password").equals(new HashGeneratorUtils().hashString(getPara("password"), "MD5"))){
-            String token = new HashGeneratorUtils().hashString(getPara("username") + new Date().getTime(), "MD5");
-			tokenMap.put(token, user.getInt("id"));
+        String username = getPara("username");
+        String password = getPara("password");
+        if((username == null)||(password == null)){
+            setAttr("status", 400);
+            setAttr("error", "请输入用户名和密码");
+            renderJson();
+        }
+        else{
+            User user = User.dao.findFirst("select * from user where username='" + username + "'");
+            if(user.getStr("password").equals(new HashGeneratorUtils().hashString(password, "MD5"))){
+                String token = new HashGeneratorUtils().hashString(username + new Date().getTime(), "MD5");
+                tokenMap.put(token, user.getInt("id"));
 
-            setAttr("status", 200);
-            setAttr("token", token);
-            renderJson();
-		}
-		else{
-            setAttr("status", 403);
-            setAttr("error", "用户名或密码错误");
-            renderJson();
-		}
+                setAttr("status", 200);
+                setAttr("token", token);
+                renderJson();
+            }
+            else{
+                setAttr("status", 403);
+                setAttr("error", "用户名或密码错误");
+                renderJson();
+            }
+        }
 	}
 	public void logout(){
         if(tokenMap.remove(getPara("token")) != null){
@@ -41,12 +50,21 @@ public class UserController extends Controller {
 	}
 	public void signup(){
 		try {
-			User user = new User();
-			user.set("username", getPara("username")).set("password", new HashGeneratorUtils().hashString(getPara("password"), "MD5")).save();
-			new StorageHandler("hdfs://localhost:9000", user.getInt("id")).createUserRoot();
-            setAttr("status", 200);
-            setAttr("result", "注册成功");
-            renderJson();
+            String username = getPara("username");
+            String password = getPara("password");
+            if((username == null)||(password == null)){
+                setAttr("status", 400);
+                setAttr("error", "请输入用户名和密码");
+                renderJson();
+            }
+            else {
+                User user = new User();
+                user.set("username", username).set("password", new HashGeneratorUtils().hashString(password, "MD5")).save();
+                new StorageHandler("hdfs://localhost:9000", user.getInt("id")).createUserRoot();
+                setAttr("status", 200);
+                setAttr("result", "注册成功");
+                renderJson();
+            }
 		}
 		catch(Exception e){
             setAttr("status", 403);
