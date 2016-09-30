@@ -1,9 +1,13 @@
 package handler;
 
+import config.ServerConfig;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.*;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.LinkedList;
 
@@ -11,6 +15,11 @@ public class StorageHandler {
     private final Configuration conf;
     private final FileSystem hdfs;
     private final String userRoot;
+
+    public StorageHandler(int userId) throws IOException{
+        this(ServerConfig.HADOOP_SERVER_URI, userId);
+    }
+
     public StorageHandler(String serverURI, int userId) throws IOException{
         this.conf = new Configuration();
         this.hdfs = FileSystem.get(URI.create(serverURI), conf);

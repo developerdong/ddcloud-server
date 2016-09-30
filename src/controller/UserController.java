@@ -12,6 +12,9 @@ import java.util.WeakHashMap;
 
 public class UserController extends Controller {
 	private static WeakHashMap<String, Integer> tokenMap = new WeakHashMap<>();
+    public static int tokenValidate(String token){
+        return tokenMap.get(token) != null?tokenMap.get(token):-1;
+    }
 	public void login() throws Exception{
         String username = getPara("username");
         String password = getPara("password");
