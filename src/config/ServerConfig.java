@@ -9,6 +9,7 @@ import model.User;
 
 
 public class ServerConfig extends JFinalConfig{
+	public static final String HADOOP_SERVER_URI = "hdfs://localhost:9000";
 	public void configConstant(Constants me){
 		me.setDevMode(true);
 	}

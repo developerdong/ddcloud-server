@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfinal.core.Controller;
+import config.ServerConfig;
 import handler.StorageHandler;
 import model.User;
 
@@ -60,7 +61,7 @@ public class UserController extends Controller {
             else {
                 User user = new User();
                 user.set("username", username).set("password", new HashGeneratorUtils().hashString(password, "MD5")).save();
-                new StorageHandler("hdfs://localhost:9000", user.getInt("id")).createUserRoot();
+                new StorageHandler(ServerConfig.HADOOP_SERVER_URI, user.getInt("id")).createUserRoot();
                 setAttr("status", 200);
                 setAttr("result", "注册成功");
                 renderJson();
