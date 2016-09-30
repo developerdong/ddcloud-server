@@ -6,11 +6,11 @@ import model.User;
 
 import java.security.MessageDigest;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.WeakHashMap;
 
 
 public class UserController extends Controller {
-	private static HashMap<String, Integer> tokenMap = new HashMap<>();
+	private static WeakHashMap<String, Integer> tokenMap = new WeakHashMap<>();
 	public void login() throws Exception{
 		User user = User.dao.findFirst("select * from user where username='" + getPara("username") + "'");
 		if(user.getStr("password").equals(new HashGeneratorUtils().hashString(getPara("password"), "MD5"))){
@@ -28,7 +28,16 @@ public class UserController extends Controller {
 		}
 	}
 	public void logout(){
-
+        if(tokenMap.remove(getPara("token")) != null){
+            setAttr("status", 200);
+            setAttr("result", "登出成功");
+            renderJson();
+        }
+        else{
+            setAttr("status", 400);
+            setAttr("error", "您未登录");
+            renderJson();
+        }
 	}
 	public void signup(){
 		try {
