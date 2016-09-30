@@ -35,10 +35,14 @@ public class UserController extends Controller {
 			User user = new User();
 			user.set("username", getPara("username")).set("password", new HashGeneratorUtils().hashString(getPara("password"), "MD5")).save();
 			new StorageHandler("hdfs://localhost:9000", user.getInt("id")).createUserRoot();
-            renderText("注册成功");
+            setAttr("status", 200);
+            setAttr("result", "注册成功");
+            renderJson();
 		}
 		catch(Exception e){
-			renderText("用户名已存在");
+            setAttr("status", 403);
+			setAttr("error", "用户名已存在");
+            renderJson();
 		}
 	}
 
