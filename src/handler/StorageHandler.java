@@ -53,8 +53,8 @@ public class StorageHandler {
         }
         return itemList.toArray(new ItemMetadata[0]);
     }
-    public void createFile(String destDirPath, File file) throws IOException {
-        hdfs.copyFromLocalFile(false, true, new Path(file.getAbsolutePath()), new Path(getRealPath(destDirPath)));
+    public void createFile(String destFilePath, File file) throws IOException {
+        hdfs.copyFromLocalFile(true, true, new Path(file.getAbsolutePath()), new Path(getRealPath(destFilePath)));
     }
     public boolean createDir(String dirPath) throws IOException{
         return hdfs.mkdirs(new Path(getRealPath(dirPath)));
