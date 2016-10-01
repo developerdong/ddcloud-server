@@ -70,7 +70,9 @@ public class StorageHandler {
     public boolean delete(String path) throws IOException{
         return hdfs.delete(new Path(getRealPath(path)), true);
     }
-
+    public boolean exists(String path) throws IOException{
+        return hdfs.exists(new Path(getRealPath(path)));
+    }
     public class ItemMetadata {
         private String name;
         private long length;
