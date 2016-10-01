@@ -16,6 +16,7 @@ public class ServerConfig extends JFinalConfig{
 
 	public void configConstant(Constants me){
 		me.setDevMode(true);
+		me.setBaseUploadPath("/tmp");
 	}
 	public void configRoute(Routes me){
 		me.add("/user", UserController.class);
