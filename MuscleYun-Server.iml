@@ -18,5 +18,9 @@
     <orderEntry type="library" name="mysql-connector-java-5.1.20-bin" level="project" />
     <orderEntry type="library" name="mchange-commons-java-0.2.10" level="project" />
     <orderEntry type="library" name="cos-26Dec2008" level="project" />
+    <orderEntry type="library" name="ehcache-core-2.5.2" level="project" />
+    <orderEntry type="library" name="log4j-1.2.16" level="project" />
+    <orderEntry type="library" name="slf4j-api-1.6.1" level="project" />
+    <orderEntry type="library" name="slf4j-log4j12-1.6.1" level="project" />
   </component>
 </module>

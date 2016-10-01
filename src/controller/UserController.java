@@ -1,19 +1,18 @@
 package controller;
 
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.ehcache.CacheKit;
 import config.ServerConfig;
 import handler.StorageHandler;
 import model.User;
 
 import java.security.MessageDigest;
 import java.util.Date;
-import java.util.WeakHashMap;
 
 
 public class UserController extends Controller {
-	private static WeakHashMap<String, Integer> tokenMap = new WeakHashMap<>();
     public static int tokenValidate(String token){
-        return tokenMap.get(token) != null?tokenMap.get(token):-1;
+        return CacheKit.get(ServerConfig.CACHE_NAME, token) != null?CacheKit.get(ServerConfig.CACHE_NAME, token):-1;
     }
 	public void login() throws Exception{
         String username = getPara("username");
@@ -27,7 +26,7 @@ public class UserController extends Controller {
             User user = User.dao.findFirst("select * from user where username='" + username + "'");
             if(user.getStr("password").equals(new HashGeneratorUtils().hashString(password, "MD5"))){
                 String token = new HashGeneratorUtils().hashString(username + new Date().getTime(), "MD5");
-                tokenMap.put(token, user.getInt("id"));
+                CacheKit.put(ServerConfig.CACHE_NAME, token, user.getInt("id"));
 
                 setAttr("status", 200);
                 setAttr("token", token);
@@ -41,7 +40,8 @@ public class UserController extends Controller {
         }
 	}
 	public void logout(){
-        if(tokenMap.remove(getPara("token")) != null){
+        if(CacheKit.get(ServerConfig.CACHE_NAME, getPara("token")) != null){
+            CacheKit.remove(ServerConfig.CACHE_NAME, getPara("token"));
             setAttr("status", 200);
             setAttr("result", "登出成功");
             renderJson();
