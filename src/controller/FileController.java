@@ -2,6 +2,7 @@ package controller;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
+import com.jfinal.upload.UploadFile;
 import handler.StorageHandler;
 import interceptor.tokenInterceptor;
 
@@ -17,13 +18,20 @@ public class FileController extends Controller {
     }
 
     public void upload() {
-        File file = getFile("file").getFile();
+        UploadFile uploadFile = getFile("file");
         String destDirPath = getPara("destDirPath");
+        String destFilePath = destDirPath + "/" + uploadFile.getOriginalFileName();
         try {
             if (storage.exists(destDirPath)) {
-                storage.createFile(destDirPath, file);
-                setAttr("status", 200);
-                setAttr("result", "创建成功");
+                if(!storage.exists(destFilePath)){
+                    storage.createFile(destFilePath, uploadFile.getFile());
+                    setAttr("status", 200);
+                    setAttr("result", "创建成功");
+                }
+                else{
+                    setAttr("status", 403);
+                    setAttr("error", "文件已存在");
+                }
             } else {
                 setAttr("status", 403);
                 setAttr("error", "目录不存在");
