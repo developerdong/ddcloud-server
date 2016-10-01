@@ -26,7 +26,7 @@ public class StorageHandler {
         this.userRoot = "/" + String.valueOf(userId);
     }
     private String getRealPath(String path){
-        return userRoot + path;
+        return path.equals("/")?userRoot:userRoot + path;
     }
     private String getParentDirPath(String path){
         return path.substring(0, path.lastIndexOf('/'));
