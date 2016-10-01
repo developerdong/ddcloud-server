@@ -13,6 +13,7 @@ public class tokenInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation inv) {
         Controller controller = inv.getController();
+        controller.getFile();
         String token = controller.getPara("token");
         if(token == null){
             controller.setAttr("status", 400);
