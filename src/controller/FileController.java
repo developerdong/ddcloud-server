@@ -16,7 +16,26 @@ public class FileController extends Controller {
     public void setStorage(StorageHandler storage) {
         this.storage = storage;
     }
-
+    public void createDir() throws IOException{
+        String dirPath = getPara("dirPath");
+        if(storage.exists(dirPath)){
+            setAttr("status", 403);
+            setAttr("error", "路径已存在");
+            renderJson();
+        }
+        else{
+            if(storage.createDir(dirPath)){
+                setAttr("status", 200);
+                setAttr("result", "创建成功");
+                renderJson();
+            }
+            else{
+                setAttr("status", 500);
+                setAttr("result", "创建失败");
+                renderJson();
+            }
+        }
+    }
     public void upload() {
         UploadFile uploadFile = getFile("file");
         String destDirPath = getPara("destDirPath");
