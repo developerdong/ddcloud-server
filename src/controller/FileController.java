@@ -36,6 +36,20 @@ public class FileController extends Controller {
             }
         }
     }
+    public void list() throws IOException{
+        String dirPath = getPara("dirPath");
+        if(!storage.exists(dirPath)){
+            setAttr("status", 403);
+            setAttr("error", "路径不存在");
+            renderJson();
+        }
+        else{
+            StorageHandler.ItemMetadata[] items = storage.list(dirPath);
+            setAttr("status", 200);
+            setAttr("result", items);
+            renderJson();
+        }
+    }
     public void upload() {
         UploadFile uploadFile = getFile("file");
         String destDirPath = getPara("destDirPath");
