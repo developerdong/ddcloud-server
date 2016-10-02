@@ -89,6 +89,38 @@ public class FileController extends Controller {
         }
     }
 
+    public void rename() throws IOException{
+        String oldPath = getPara("oldPath");
+        String newPath = getPara("newPath");
+        if(storage.exists(newPath)){
+            setAttr("status", 400);
+            setAttr("result", "目标路径已存在");
+        }
+        else if(storage.rename(oldPath, newPath)){
+            setAttr("status", 200);
+            setAttr("result", "重命名成功");
+        }
+        else{
+            setAttr("status", 400);
+            setAttr("result", "重命名失败，请检查路径");
+        }
+        renderJson();
+    }
+
+    public void move() throws IOException{
+        String oldPath = getPara("oldPath");
+        String newPath = getPara("newPath");
+        if(storage.rename(oldPath, newPath)){
+            setAttr("status", 200);
+            setAttr("result", "移动成功");
+        }
+        else{
+            setAttr("status", 400);
+            setAttr("result", "移动失败，请检查路径");
+        }
+        renderJson();
+    }
+
     public void delete() {
 
     }
