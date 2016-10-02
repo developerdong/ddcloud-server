@@ -121,7 +121,16 @@ public class FileController extends Controller {
         renderJson();
     }
 
-    public void delete() {
-
+    public void delete() throws IOException{
+        String path = getPara("path");
+        if(storage.delete(path)){
+            setAttr("status", 200);
+            setAttr("result", "删除成功");
+        }
+        else{
+            setAttr("status", 400);
+            setAttr("result", "删除失败，请检查路径");
+        }
+        renderJson();
     }
 }
