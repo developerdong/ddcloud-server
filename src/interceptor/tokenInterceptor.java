@@ -7,13 +7,15 @@ import controller.FileController;
 import controller.UserController;
 import handler.StorageHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class tokenInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation inv) {
         Controller controller = inv.getController();
-        if(controller.getRequest().getContentType().contains("multipart/form-data")){
+        HttpServletRequest request = controller.getRequest();
+        if((request.getMethod().equals("POST"))&&(request.getContentType().contains("multipart/form-data"))){
             controller.getFile();
         }
         String token = controller.getPara("token");
