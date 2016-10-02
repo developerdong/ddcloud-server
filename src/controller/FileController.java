@@ -20,7 +20,7 @@ public class FileController extends Controller {
         String dirPath = getPara("dirPath");
         if(storage.exists(dirPath)){
             setAttr("status", 403);
-            setAttr("error", "路径已存在");
+            setAttr("result", "路径已存在");
             renderJson();
         }
         else{
@@ -40,7 +40,7 @@ public class FileController extends Controller {
         String dirPath = getPara("dirPath");
         if(!storage.exists(dirPath)){
             setAttr("status", 403);
-            setAttr("error", "路径不存在");
+            setAttr("result", "路径不存在");
             renderJson();
         }
         else{
@@ -63,15 +63,15 @@ public class FileController extends Controller {
                 }
                 else{
                     setAttr("status", 403);
-                    setAttr("error", "文件已存在");
+                    setAttr("result", "文件已存在");
                 }
             } else {
                 setAttr("status", 403);
-                setAttr("error", "目录不存在");
+                setAttr("result", "目录不存在");
             }
         } catch (IOException e) {
             setAttr("status", 500);
-            setAttr("error", "创建失败");
+            setAttr("result", "创建失败");
         } finally {
             renderJson();
         }
@@ -81,7 +81,7 @@ public class FileController extends Controller {
         String filePath = getPara("filePath");
         if(!storage.exists(filePath)){
             setAttr("status", 400);
-            setAttr("error", "路径不存在");
+            setAttr("result", "路径不存在");
             renderJson();
         }
         else{

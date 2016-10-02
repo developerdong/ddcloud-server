@@ -21,14 +21,14 @@ public class tokenInterceptor implements Interceptor {
         String token = controller.getPara("token");
         if(token == null){
             controller.setAttr("status", 400);
-            controller.setAttr("error", "请输入token");
+            controller.setAttr("result", "请输入token");
             controller.renderJson();
         }
         else{
             int userId = UserController.tokenValidate(token);
             if(userId == -1){
                 controller.setAttr("status", 400);
-                controller.setAttr("error", "token不正确");
+                controller.setAttr("result", "token不正确");
                 controller.renderJson();
             }
             else{
@@ -38,7 +38,7 @@ public class tokenInterceptor implements Interceptor {
                         inv.invoke();
                     } catch (IOException e) {
                         controller.setAttr("status", 500);
-                        controller.setAttr("error", "服务器内部错误");
+                        controller.setAttr("result", "服务器内部错误");
                         controller.renderJson();
                     }
                 }

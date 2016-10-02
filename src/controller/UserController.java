@@ -19,7 +19,7 @@ public class UserController extends Controller {
         String password = getPara("password");
         if((username == null)||(password == null)){
             setAttr("status", 400);
-            setAttr("error", "请输入用户名和密码");
+            setAttr("result", "请输入用户名和密码");
             renderJson();
         }
         else{
@@ -34,7 +34,7 @@ public class UserController extends Controller {
             }
             else{
                 setAttr("status", 403);
-                setAttr("error", "用户名或密码错误");
+                setAttr("result", "用户名或密码错误");
                 renderJson();
             }
         }
@@ -48,7 +48,7 @@ public class UserController extends Controller {
         }
         else{
             setAttr("status", 400);
-            setAttr("error", "您未登录");
+            setAttr("result", "您未登录");
             renderJson();
         }
 	}
@@ -58,7 +58,7 @@ public class UserController extends Controller {
             String password = getPara("password");
             if((username == null)||(password == null)){
                 setAttr("status", 400);
-                setAttr("error", "请输入用户名和密码");
+                setAttr("result", "请输入用户名和密码");
                 renderJson();
             }
             else {
@@ -72,7 +72,7 @@ public class UserController extends Controller {
 		}
 		catch(Exception e){
             setAttr("status", 403);
-			setAttr("error", "用户名已存在");
+			setAttr("result", "用户名已存在");
             renderJson();
 		}
 	}
