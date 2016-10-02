@@ -44,8 +44,16 @@ public class FileController extends Controller {
         }
     }
 
-    public void download() {
-
+    public void download() throws IOException{
+        String filePath = getPara("filePath");
+        if(!storage.exists(filePath)){
+            setAttr("status", 400);
+            setAttr("error", "路径不存在");
+            renderJson();
+        }
+        else{
+            renderFile(storage.getFile(filePath));
+        }
     }
 
     public void delete() {
