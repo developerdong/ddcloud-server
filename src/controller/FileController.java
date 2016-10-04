@@ -4,12 +4,11 @@ import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
 import handler.StorageHandler;
-import interceptor.tokenInterceptor;
+import interceptor.TokenInterceptor;
 
-import java.io.File;
 import java.io.IOException;
 
-@Before(tokenInterceptor.class)
+@Before(TokenInterceptor.class)
 public class FileController extends Controller {
     private StorageHandler storage;
 

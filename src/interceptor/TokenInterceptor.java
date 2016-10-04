@@ -10,7 +10,7 @@ import handler.StorageHandler;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class tokenInterceptor implements Interceptor {
+public class TokenInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation inv) {
         Controller controller = inv.getController();
