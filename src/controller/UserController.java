@@ -30,6 +30,7 @@ public class UserController extends Controller {
 
                 setAttr("status", 200);
                 setAttr("token", token);
+                setAttr("result", "登录成功");
                 renderJson();
             }
             else{
